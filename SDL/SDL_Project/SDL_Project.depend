@@ -1,0 +1,64 @@
+# depslib dependency file v1.0
+1649990171 source:f:\sdl\sdl_project\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<ctime>
+	"SDL_Ultis.h"
+	"Para.h"
+	"Box.h"
+	"game.h"
+	"Character.h"
+	"BackGround.h"
+	<stdio.h>
+	<SDL_ttf.h>
+
+1648026719 f:\sdl\sdl_project\sdl_ultis.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"Para.h"
+
+1649989154 f:\sdl\sdl_project\para.h
+	<iostream>
+
+1647934491 source:f:\sdl\sdl_project\sdl_ultis.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_Ultis.h"
+	"Para.h"
+
+1649991040 f:\sdl\sdl_project\box.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"Para.h"
+
+1649992440 f:\sdl\sdl_project\game.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<ctime>
+	"SDL_Ultis.h"
+	"Para.h"
+	"Character.h"
+	"Box.h"
+	<SDL_ttf.h>
+
+1648712762 f:\sdl\sdl_project\background.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_Ultis.h"
+	"Para.h"
+	"Box.h"
+
+1649129211 f:\sdl\sdl_project\character.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_Ultis.h"
+	"Para.h"
+	"Box.h"
+
