@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1649990171 source:f:\sdl\sdl_project\main.cpp
+1651338914 source:f:\sdl\sdl_project\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -13,13 +13,13 @@
 	<stdio.h>
 	<SDL_ttf.h>
 
-1648026719 f:\sdl\sdl_project\sdl_ultis.h
+1650872286 f:\sdl\sdl_project\sdl_ultis.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	"Para.h"
 
-1649989154 f:\sdl\sdl_project\para.h
+1651339302 f:\sdl\sdl_project\para.h
 	<iostream>
 
 1647934491 source:f:\sdl\sdl_project\sdl_ultis.cpp
@@ -29,13 +29,13 @@
 	"SDL_Ultis.h"
 	"Para.h"
 
-1649991040 f:\sdl\sdl_project\box.h
+1651338405 f:\sdl\sdl_project\box.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	"Para.h"
 
-1649992440 f:\sdl\sdl_project\game.h
+1651338585 f:\sdl\sdl_project\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -44,9 +44,10 @@
 	"Para.h"
 	"Character.h"
 	"Box.h"
+	"BackGround.h"
 	<SDL_ttf.h>
 
-1648712762 f:\sdl\sdl_project\background.h
+1651338914 f:\sdl\sdl_project\background.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -54,7 +55,7 @@
 	"Para.h"
 	"Box.h"
 
-1649129211 f:\sdl\sdl_project\character.h
+1651229624 f:\sdl\sdl_project\character.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
