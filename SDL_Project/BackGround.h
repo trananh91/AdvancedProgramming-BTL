@@ -13,15 +13,13 @@ struct Treasure
     bool Tdrawing = false;
 
     SDL_Texture* Wtexture;
-    SDL_Rect WRect = {200, 150, 400, 400};
+    SDL_Rect WRect = {160, 0, 430, 400};
 
     void tdraw(SDL_Renderer* renderer)
     {
-//        if (Tdrawing == true){
-            Wtexture = loadTexture("shield.png", renderer);
-            SDL_RenderCopy(renderer, Wtexture, NULL, &WRect);
-//            SDL_RenderPresent(renderer);
-//        }
+        cout << "Yes" << endl;
+        Wtexture = loadTexture("VNU.jpg", renderer);
+        SDL_RenderCopy(renderer, Wtexture, NULL, &WRect);
     }
 };
 

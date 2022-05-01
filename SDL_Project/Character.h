@@ -22,33 +22,44 @@ struct Character
 
     bool CharacterShield = false;
 
-    SDL_Rect CharacterRect;
+    SDL_Rect CharacterRect = {x, y, w, h};
 
     SDL_Surface* CSurface;
     SDL_Texture* CTexture;
 
     void draw(SDL_Renderer* renderer)
     {
+//        if (CharacterShield == true)
+//        {
+//            CSurface = IMG_Load("SpaceShipWithShield.png");
+//        }
+//        else{
+//        CSurface = IMG_Load( "BattleShip.png");}
+//        if( CSurface == NULL )
+//        {
+//            printf( "Unable to load image %s! SDL_image Error: \n", IMG_GetError() );
+//        }
+//        else
+//        {
+//            CTexture = SDL_CreateTextureFromSurface( renderer, CSurface );
+//            if( CTexture == NULL )
+//            {
+//                printf( "Unable to create texture from %s! SDL Error: \n", SDL_GetError() );
+//            }
+//
+//            //Get rid of old loaded surface
+//            SDL_FreeSurface( CSurface );
+//        }
+//        SDL_RenderCopy(renderer, CTexture, NULL, &CharacterRect);
+
         if (CharacterShield == true)
         {
-            CSurface = IMG_Load("SpaceShipWithShield.png");
-        }
-        else{
-        CSurface = IMG_Load( "BattleShip.png");}
-        if( CSurface == NULL )
-        {
-            printf( "Unable to load image %s! SDL_image Error: \n", IMG_GetError() );
+            CTexture = loadTexture("UET_Face_Mask.png", renderer);
         }
         else
         {
-            CTexture = SDL_CreateTextureFromSurface( renderer, CSurface );
-            if( CTexture == NULL )
-            {
-                printf( "Unable to create texture from %s! SDL Error: \n", SDL_GetError() );
-            }
-
-            //Get rid of old loaded surface
-            SDL_FreeSurface( CSurface );
+//            CTexture = loadTexture("BattleShip.png", renderer);
+            CTexture = loadTexture("UET2.png", renderer);
         }
         SDL_RenderCopy(renderer, CTexture, NULL, &CharacterRect);
     }

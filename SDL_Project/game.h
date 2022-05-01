@@ -55,8 +55,8 @@ struct Game
         }
         renderer = _renderer;
 
-        AsteroidTexture = loadTexture("Asteroid.png", renderer);
-        ShieldTexture = loadTexture("shield3.png", renderer);
+        AsteroidTexture = loadTexture("Virus_Red.png", renderer);
+        ShieldTexture = loadTexture("Face_Mask.png", renderer);
 
 ////1
         for (int i = 0; i <= Row; i++)
@@ -131,7 +131,7 @@ struct Game
 //        SpaceShip.w = 80 ;
 //        SpaceShip.h = 100 ;
 
-        SpaceShip.CharacterRect = {SpaceShip.x, SpaceShip.y, SpaceShip.w, SpaceShip.h};
+//        SpaceShip.CharacterRect = {SpaceShip.x, SpaceShip.y, SpaceShip.w, SpaceShip.h};
     }
 
     void CountDown(const SDL_Rect &Background, TTF_Font* font, SDL_Texture* background)
@@ -322,12 +322,12 @@ struct Game
     {
         if (checkCollision1())
         {
-            SDL_Texture* EndBackground = loadTexture("Boom1.png", renderer);
+            SDL_Texture* EndBackground = loadTexture("COVID.jpg", renderer);
             SDL_RenderCopy(renderer, EndBackground, NULL, NULL);
 
             SDL_Color color = {0, 0, 255};
 
-            SDL_Surface* FontOverSurface = TTF_RenderText_Solid(font, "Collided! Game Over!", color);
+            SDL_Surface* FontOverSurface = TTF_RenderText_Solid(font, "Collided! 2Game Over!", color);
             SDL_Texture* FontOverTexture = SDL_CreateTextureFromSurface(renderer, FontOverSurface);
 
             int textW = 500;
@@ -349,11 +349,11 @@ struct Game
         return false;
     }
 
-    void Over1(TTF_Font* font)
+    bool Over1(TTF_Font* font, SDL_Texture* BGtexture)
     {
         if (checkCollision1())
         {
-            SDL_Texture* EndBackground = loadTexture("Boom1.png", renderer);
+            SDL_Texture* EndBackground = loadTexture("COVID.jpg", renderer);
             SDL_RenderCopy(renderer, EndBackground, NULL, NULL);
 
             SDL_Color color = {0, 0, 255};
@@ -369,15 +369,21 @@ struct Game
             SDL_RenderPresent(renderer);
 
             SDL_Delay(6000);
-            return;
+            return true;
         }
         else if (Score == NumberOfBoxes)
         {
             Gtreasure.Tdrawing = true;
-            winning = true;
-            return;
+
+            SDL_RenderClear(renderer);
+            loadBackGround(BGtexture, renderer);
+            SpaceShip.draw(renderer);
+            Gtreasure.tdraw(renderer);
+            SDL_RenderPresent(renderer);
+
+            return true;
         }
-        return;
+        return false;
     }
 
     void checkBoxDes()

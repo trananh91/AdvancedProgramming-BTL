@@ -63,3 +63,67 @@
 	"Para.h"
 	"Box.h"
 
+1651421841 source:c:\ltnc-btl\sdl_project\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<ctime>
+	"SDL_Ultis.h"
+	"Para.h"
+	"Box.h"
+	"game.h"
+	"Character.h"
+	"BackGround.h"
+	<stdio.h>
+	<SDL_ttf.h>
+
+1651371765 c:\ltnc-btl\sdl_project\sdl_ultis.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"Para.h"
+
+1651421989 c:\ltnc-btl\sdl_project\para.h
+	<iostream>
+
+1651338405 c:\ltnc-btl\sdl_project\box.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"Para.h"
+
+1651422062 c:\ltnc-btl\sdl_project\game.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<ctime>
+	"SDL_Ultis.h"
+	"Para.h"
+	"Character.h"
+	"Box.h"
+	"BackGround.h"
+	<SDL_ttf.h>
+
+1651399402 c:\ltnc-btl\sdl_project\character.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_Ultis.h"
+	"Para.h"
+	"Box.h"
+
+1651422485 c:\ltnc-btl\sdl_project\background.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_Ultis.h"
+	"Para.h"
+	"Box.h"
+
+1647934491 source:c:\ltnc-btl\sdl_project\sdl_ultis.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_Ultis.h"
+	"Para.h"
+

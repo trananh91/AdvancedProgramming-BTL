@@ -38,7 +38,8 @@ int main(int argc, char* argv[])
     Game game(renderer);
     game.CountDown(Background, font, background);
     game.LoadBoxes();
-    background = loadTexture("universe.jpg", renderer);
+//    background = loadTexture("universe.jpg", renderer);
+    background = loadTexture("Road.png", renderer);
 
     int counter = 0;
 //    while(!game.Over(font))
@@ -95,17 +96,23 @@ int main(int argc, char* argv[])
         {
             SDL_Delay(frameDelay - end);
         }
-        if (game.checkCollision1() || Score == NumberOfBoxes)
+//        if (game.checkCollision1() || Score == NumberOfBoxes)
+//        {
+//            game.Over1(font);
+//            break;
+//        }
+
+        if (game.Over1(font, background))
         {
-            game.Over1(font);
             break;
         }
     }
 
-    game.loadBackGround(background, renderer);
-    game.OverWin();
-    game.SpaceShip.draw(renderer);
-    SDL_RenderPresent(renderer);
+//    SDL_RenderClear(renderer);
+//    game.loadBackGround(background, renderer);
+//    game.OverWin();
+//    game.SpaceShip.draw(renderer);
+//    SDL_RenderPresent(renderer);
 
     SDL_Delay(6000);
 

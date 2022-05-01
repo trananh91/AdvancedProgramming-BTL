@@ -12,7 +12,7 @@ const Uint32 StartTime = 0;
 
 static int Score = 0;
 
-const int NumberOfBoxes = 66;
+const int NumberOfBoxes = 10;
 const int BoxesPerRow = 4;
 
 #endif // PARA__H
