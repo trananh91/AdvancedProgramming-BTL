@@ -18,58 +18,48 @@ struct Box
     int h = BOX_SIZE;
 
     bool shield = false;
-    bool done = false;
+    bool doneAddingScore = false;
     bool drawing = false;
     bool collided = false;
+    bool sanitizer = false;
 
-//    SDL_Surface* surface;
     SDL_Texture* BoxText;
 
-    SDL_Rect rect;
-
-    void checkDestroy()
-    {
-        if (y >= SCREEN_HEIGHT && done == false)
-        {
-            Score++;
-            done = true;
-//            SDL_DestroyTexture(BoxText);
-            cout << "Destroy!" << " " << Score << endl;
-            return;
-        }
-    }
+    SDL_Rect rect = {x, y, BOX_SIZE, BOX_SIZE};
 
     void moving(int& yStep)
     {
-        if (Score <= 10)
+        if (Score <= 25 && shield == false)
             yStep = 8;
-        else if (Score > 10 && Score <= 25)
+        else if (Score > 25 && Score <= 50 && shield == false)
             yStep = 12;
-        else if (Score > 25 && Score <= 45)
+        else if (Score > 50 && Score <= 70 && shield == false)
             yStep = 16;
-        else if (Score > 45 && Score <= NumberOfBoxes)
+        else if (Score > 70 && Score <= NumberOfViruses && shield == false)
             yStep = 25;
+
         y += yStep;
         rect.y += yStep;
-        if (y >= 0 && collided == false)
+
+        if (y >= -10 && collided == false)
         {
             drawing = true;
         }
     }
 
-//    void draw2(SDL_Renderer* renderer)
-//    {
-//        SDL_RenderCopy(renderer, texture, NULL, &rect);
-//    }
-
-    void LoadBox(SDL_Texture* ATexture, SDL_Texture* STexture)
+    void LoadBox(SDL_Texture* ATexture, SDL_Texture* STexture, SDL_Texture* HTexture)
     {
-        if (shield == false)
+        if (shield == false && sanitizer == false)
         {
             BoxText = ATexture;
         }
-        else{
+        else if (shield == true && sanitizer == false)
+        {
             BoxText = STexture;
+        }
+        else if (sanitizer == true && shield == false)
+        {
+            BoxText = HTexture;
         }
     }
 
@@ -80,6 +70,17 @@ struct Box
             SDL_RenderCopy(renderer, BoxText, NULL, &rect);
         }
     }
+
+    void AddScore()
+    {
+        if (y >= SCREEN_HEIGHT && doneAddingScore == false)
+        {
+            Score++;
+            doneAddingScore = true;
+            return;
+        }
+    }
+
 };
 
 #endif // BOX__H
