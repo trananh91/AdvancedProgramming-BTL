@@ -32,8 +32,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="BackGround.h" />
 		<Unit filename="Box.h" />
+		<Unit filename="Bullet.h" />
 		<Unit filename="Character.h" />
 		<Unit filename="Para.h" />
 		<Unit filename="SDL_Ultis.cpp" />
