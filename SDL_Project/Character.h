@@ -10,8 +10,8 @@
 
 const int SpaceShipW = 80;
 const int SpaceShipH = 100;
-const int SpaceShipX = 400;
-const int SpaceShipY = 600;
+const int SpaceShipX = 630;
+const int SpaceShipY = 570;
 
 struct Character
 {
@@ -21,6 +21,7 @@ struct Character
     int h = SpaceShipH;
 
     bool CharacterShield = false;
+    bool atEdge = false;
 
     SDL_Rect CharacterRect = {x, y, w, h};
 
@@ -29,63 +30,88 @@ struct Character
 
     void draw(SDL_Renderer* renderer)
     {
-//        if (CharacterShield == true)
-//        {
-//            CSurface = IMG_Load("SpaceShipWithShield.png");
-//        }
-//        else{
-//        CSurface = IMG_Load( "BattleShip.png");}
-//        if( CSurface == NULL )
-//        {
-//            printf( "Unable to load image %s! SDL_image Error: \n", IMG_GetError() );
-//        }
-//        else
-//        {
-//            CTexture = SDL_CreateTextureFromSurface( renderer, CSurface );
-//            if( CTexture == NULL )
-//            {
-//                printf( "Unable to create texture from %s! SDL Error: \n", SDL_GetError() );
-//            }
-//
-//            //Get rid of old loaded surface
-//            SDL_FreeSurface( CSurface );
-//        }
-//        SDL_RenderCopy(renderer, CTexture, NULL, &CharacterRect);
 
         if (CharacterShield == true)
         {
-            CTexture = loadTexture("UET_Face_Mask.png", renderer);
+            CTexture = loadTexture("UET_SC_Mask.png", renderer);
         }
         else
         {
-//            CTexture = loadTexture("BattleShip.png", renderer);
-            CTexture = loadTexture("UET2.png", renderer);
+            CTexture = loadTexture("UET_SC1.png", renderer);
         }
+
+        if (x < LeftEdge || x > RightEdge)
+        {
+            if (x < LeftEdge)
+            {
+                x = LeftEdge;
+                CharacterRect.x = LeftEdge;
+            }
+            else
+            {
+                x = RightEdge;
+                CharacterRect.x = RightEdge;
+            }
+        }
+
+        if (y < UpEdge || y > DownEdge)
+        {
+            if (y < UpEdge)
+            {
+                y = UpEdge;
+                CharacterRect.y = UpEdge;
+            }
+            else
+            {
+                y = DownEdge;
+                CharacterRect.y = DownEdge;
+            }
+        }
+
         SDL_RenderCopy(renderer, CTexture, NULL, &CharacterRect);
+    }
+
+    void WinDraw(SDL_Renderer* renderer)
+    {
+        SDL_Rect WinRect = {600, 500, 300, 300};
+        CTexture = loadTexture("UETWin1.png", renderer);
+        SDL_RenderCopy(renderer, CTexture, NULL, &WinRect);
     }
 
     void moveLeft()
     {
-        x -= 30;
-        CharacterRect.x -= 30;
+        if (atEdge == false)
+        {
+            x -= 30;
+            CharacterRect.x -= 30;
+        }
     }
 
     void moveRight()
     {
-        x += 30;
-        CharacterRect.x += 30;
+        if (atEdge == false)
+        {
+            x += 30;
+            CharacterRect.x += 30;
+        }
     }
 
     void moveUp()
     {
-        y -= 30;
-        CharacterRect.y -= 30;
+        if (atEdge == false)
+        {
+            y -= 30;
+            CharacterRect.y -= 30;
+        }
     }
 
     void moveDown()
     {
-        y += 30;
-        CharacterRect.y += 30;
+        if (atEdge == false)
+        {
+            y += 30;
+            CharacterRect.y += 30;
+        }
     }
 };
 
