@@ -31,3 +31,5 @@
 *.out
 *.app
 SDL_Project/SDL_Project.depend
+SDL_Project/doxygen/doxyfile
+SDL_Project/SDL_Project.cscope_file_list
