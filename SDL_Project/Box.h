@@ -22,6 +22,9 @@ struct Box
     bool drawing = false;
     bool collided = false;
     bool sanitizer = false;
+    bool variable = false;
+    bool getHit1 = false;
+    bool getHit2 = false;
 
     SDL_Texture* BoxText;
 
@@ -29,14 +32,14 @@ struct Box
 
     void moving(int& yStep)
     {
-        if (Score <= 25 && shield == false)
+        if (Score <= 15 && shield == false)
             yStep = 8;
-        else if (Score > 25 && Score <= 50 && shield == false)
+        else if (Score > 15 && Score <= 30 && shield == false)
             yStep = 12;
-        else if (Score > 50 && Score <= 70 && shield == false)
-            yStep = 16;
-        else if (Score > 70 && Score <= NumberOfViruses && shield == false)
-            yStep = 25;
+        else if (Score > 30 && Score <= 65 && shield == false)
+            yStep = 15;
+        else if (Score > 65 && Score <= NumberOfViruses && shield == false)
+            yStep = 18;
 
         y += yStep;
         rect.y += yStep;
@@ -47,19 +50,23 @@ struct Box
         }
     }
 
-    void LoadBox(SDL_Texture* ATexture, SDL_Texture* STexture, SDL_Texture* HTexture)
+    void LoadBox(SDL_Texture* ATexture, SDL_Texture* STexture, SDL_Texture* HTexture, SDL_Texture* VTexture)
     {
-        if (shield == false && sanitizer == false)
+        if (shield == false && sanitizer == false && variable == false)
         {
             BoxText = ATexture;
         }
-        else if (shield == true && sanitizer == false)
+        else if (shield == true)
         {
             BoxText = STexture;
         }
-        else if (sanitizer == true && shield == false)
+        else if (sanitizer == true)
         {
             BoxText = HTexture;
+        }
+        else if (variable == true)
+        {
+            BoxText = VTexture;
         }
     }
 
