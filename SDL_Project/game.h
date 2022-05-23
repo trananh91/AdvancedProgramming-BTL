@@ -23,14 +23,11 @@ int STEP;
 
 struct Game
 {
-    // Khoang cach giua cac virus
     int DISTANCE = (RightEdge - LeftEdge)/VirusesPerRow;
 
     SDL_Renderer* renderer;
 
-    SDL_Texture* VirusTexture;
-    SDL_Texture* MaskTexture;
-    SDL_Texture* SanitizerTexture;
+    SDL_Texture *VirusTexture, *MaskTexture, *SanitizerTexture, *VariableTexture;
 
     SDL_Texture* MainText;
 
@@ -39,7 +36,7 @@ struct Game
 
     Character UET_Main;
 
-    Bullet SatKhuan;
+    Bullet SatKhuan[3];
 
     Game(SDL_Renderer* _renderer)
     {
@@ -50,10 +47,12 @@ struct Game
         }
         renderer = _renderer;
 
+        srand(time(nullptr));
+
         VirusTexture = loadTexture("Virus_Red.png", renderer);
         MaskTexture = loadTexture("Face_Mask.png", renderer);
-//        MaskTexture = loadTexture("C:\\ltnc-btl\\SDL_Project\\Character\\Face_Mask.png", renderer);
         SanitizerTexture = loadTexture("Sanitizer.png", renderer);
+        VariableTexture = loadTexture("KingOfVirus.png", renderer);
 
         for (int i = 0; i <= Row; i++)
         {
@@ -76,7 +75,13 @@ struct Game
         box[xs1][ys1].shield = true;
         box[xs2][ys2].sanitizer = true;
 
-//        box[0][0].sanitizer = true;
+        for (int i = 14; i < Row; i++)
+        {
+            for (int j = 0; j < VirusesPerRow; j++)
+            {
+                box[i][j].variable = true;
+            }
+        }
 
         int countBox = 0;
         while (true)
@@ -190,7 +195,10 @@ struct Game
                 }
             }
         }
-        SatKhuan.updateBullet();
+        for (int i = 0; i < 3; i++)
+        {
+            SatKhuan[i].updateBullet();
+        }
     }
 
     bool checkCollision()
@@ -247,7 +255,11 @@ struct Game
                     //an duoc sat khuan
                     else if (box[i][j].sanitizer == true && box[i][j].collided == false)
                     {
-                        SatKhuan.AbleToShoot = true;
+                        for (int m = 0; m < 3; m++)
+                        {
+                            SatKhuan[m].AbleToShoot = true;
+                        }
+
                         box[i][j].drawing = false;
                         box[i][j].collided = true;
 
@@ -270,29 +282,33 @@ struct Game
 
                 }
 
-                if (SDL_HasIntersection(&box[i][j].rect, &SatKhuan.WRect) == true)
+                // Ban dan
+                for (int k = 0; k < 3; k++)
                 {
-                    if (SatKhuan.Tdrawing == true && box[i][j].shield == false && SatKhuan.hit == false)
+                    if (SDL_HasIntersection(&box[i][j].rect, &SatKhuan[k].WRect) == true)
                     {
-                        box[i][j].collided = true;
-                        box[i][j].drawing = false;
-                        SatKhuan.hit = true;
-                        return false;
+                        // Ban virus thuong
+                        if (SatKhuan[k].Tdrawing == true && box[i][j].shield == false && SatKhuan[k].hit == false && box[i][j].collided == false && box[i][j].variable == false)
+                        {
+                            box[i][j].collided = true;
+                            box[i][j].drawing = false;
+                            SatKhuan[k].hit = true;
+                        }
+                        // Ban virus bien the lan 1
+                        else if (SatKhuan[k].Tdrawing == true && box[i][j].shield == false && SatKhuan[k].hit == false && box[i][j].collided == false && box[i][j].variable == true && box[i][j].getHit1 == false)
+                        {
+                            box[i][j].getHit1 = true;
+                            SatKhuan[k].hit = true;
+                        }
+                        // Ban virus bien the lan 2
+                        else if (SatKhuan[k].Tdrawing == true && box[i][j].shield == false && SatKhuan[k].hit == false && box[i][j].collided == false && box[i][j].variable == true && box[i][j].getHit1 == true)
+                        {
+                            box[i][j].drawing = false;
+                            SatKhuan[k].hit = true;
+                            box[i][j].collided = true;
+                        }
                     }
                 }
-
-//                for (int i = 0; i < 3; i++)
-//                {
-//                    if (SDL_HasIntersection(&box[i][j].rect, &SatKhuan[i].WRect) == true)
-//                    {
-//                        if (SatKhuan[i].Tdrawing == true && box[i][j].shield == false && SatKhuan[i].hit == false)
-//                        {
-//                            box[i][j].collided = true;
-//                            box[i][j].drawing = false;
-//                            SatKhuan[i].hit = true;
-//                        }
-//                    }
-//                }
             }
         }
         return false;
@@ -354,7 +370,7 @@ struct Game
             UET_Main.WinDraw(renderer);
 
             SDL_Rect WRect = {280, 40, 800, 420};
-            cout << "Yes" << endl;
+
             SDL_Texture* Wtexture = loadTexture("VNU.jpg", renderer);
             SDL_RenderCopy(renderer, Wtexture, NULL, &WRect);
 
@@ -383,7 +399,7 @@ struct Game
             {
                 if (checkBox[i][j] == 1)
                 {
-                    box[i][j].LoadBox(VirusTexture, MaskTexture, SanitizerTexture);
+                    box[i][j].LoadBox(VirusTexture, MaskTexture, SanitizerTexture, VariableTexture);
                 }
             }
         }
@@ -403,7 +419,10 @@ struct Game
         }
 
         UET_Main.draw(renderer);
-        SatKhuan.Bdraw(renderer);
+        for (int i = 0; i < 3; i++)
+        {
+            SatKhuan[i].Bdraw(renderer);
+        }
     }
 
     void loadBackGround(SDL_Texture* BGtexture, SDL_Renderer* BGrenderer)
@@ -413,35 +432,34 @@ struct Game
 
     void Shooting()
     {
-
-        SatKhuan.x = UET_Main.x;
-        SatKhuan.y = UET_Main.y;
-
-        SatKhuan.WRect = {UET_Main.x, UET_Main.y, 60, 60};
-        SatKhuan.Tdrawing = true;
-        SatKhuan.AbleToShoot = false;
-
-//        SatKhuan[numberOfBullet-1].x = UET_Main.x;
-//        SatKhuan[numberOfBullet-1].y = UET_Main.y;
-//
-//        SatKhuan[numberOfBullet-1].WRect = {UET_Main.x, UET_Main.y, 60, 60};
-//        SatKhuan[numberOfBullet-1].Tdrawing = true;
-//        SatKhuan[numberOfBullet-1].AbleToShoot = false;
-
-        Mix_Chunk* chunk = NULL;
-
-        if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+        if (numberOfBullet >= 0)
         {
-            printf("%s", Mix_GetError());
-        }
+            if (SatKhuan[numberOfBullet-1].AbleToShoot == true)
+            {
+                SatKhuan[numberOfBullet-1].x = UET_Main.x;
+                SatKhuan[numberOfBullet-1].y = UET_Main.y;
 
-        chunk = Mix_LoadWAV("Shoot.wav");
-        if (chunk == NULL)
-        {
-            printf("%s", Mix_GetError());
-        }
-        Mix_PlayChannel(-1, chunk, 0);
+                SatKhuan[numberOfBullet-1].WRect = {UET_Main.x, UET_Main.y, 60, 60};
+                SatKhuan[numberOfBullet-1].Tdrawing = true;
+                SatKhuan[numberOfBullet-1].AbleToShoot = false;
 
+                Mix_Chunk* chunk = NULL;
+
+                if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+                {
+                    printf("%s", Mix_GetError());
+                }
+
+                chunk = Mix_LoadWAV("Shoot.wav");
+                if (chunk == NULL)
+                {
+                    printf("%s", Mix_GetError());
+                }
+                Mix_PlayChannel(-1, chunk, 0);
+
+                numberOfBullet--;
+            }
+        }
     }
 
     void handleEvent(SDL_Event &e)
@@ -467,11 +485,9 @@ struct Game
                         updateDown();
                         break;
                     case SDLK_SPACE:
-                        if (SatKhuan.AbleToShoot == true)
-                        {
-                            Shooting();
-                        }
+                        Shooting();
                 }
+
             }
         }
     }
@@ -516,13 +532,20 @@ struct Game
         SDL_QueryTexture(FontTexture, NULL, NULL, &textW, &textH);
         SDL_RenderCopy(renderer, FontTexture, NULL, &DisRect);
 
-        SDL_Rect bulletRect = {120, 200, 80, 100};
+        SDL_Rect bulletRect[3];
+        bulletRect[0] = {120, 200, 80, 100};
+        bulletRect[1] = {120, 300, 80, 100};
+        bulletRect[2] = {120, 400, 80, 100};
         SDL_Texture* bulletTexture = loadTexture("Water.png", renderer);
 
-        if(SatKhuan.AbleToShoot == true && SatKhuan.hit == false)
+        for (int i = 0; i < numberOfBullet; i++)
         {
-            SDL_RenderCopy(renderer, bulletTexture, NULL, &bulletRect);
+            if(SatKhuan[i].AbleToShoot == true && SatKhuan[i].hit == false)
+            {
+                SDL_RenderCopy(renderer, bulletTexture, NULL, &bulletRect[i]);
+            }
         }
+
     }
 
     void checkScoreAdded()
