@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <ctime>
+//#include <ctime>
 #include "SDL_Ultis.h"
 #include "Para.h"
 #include "Box.h"
@@ -30,9 +30,6 @@ int main(int argc, char* argv[])
 
     //Background
     SDL_Texture* background = loadTexture("School.jpg", renderer);
-
-    // srand for random
-    srand(time(nullptr));
 
     Game game(renderer);
     game.CountDown(font, background);
